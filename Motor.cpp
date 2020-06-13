@@ -1,6 +1,6 @@
 #include "Motor.h"
 
-//매크로 정의
+//비트 설정 매크로 정의
 #define set_bit(value, bit) ( _SFR_BYTE(value) |=  _BV(bit))
 #define clear_bit(value, bit) ( _SFR_BYTE(value) &= ~_BV(bit))
 
