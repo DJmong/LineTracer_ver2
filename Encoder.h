@@ -6,5 +6,5 @@
 
 // 함수 정의
 void EncoderInit();
-float get_dist();
+float EncoderGetDist(char direc);
 #endif
