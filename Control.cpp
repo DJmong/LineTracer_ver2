@@ -1,3 +1,8 @@
+/* 
+ *  설명 : 센서를 통해 측정한 error 값을 통해 입력 값을 제어하는 PID 컨트롤러
+ * 
+ */
+
 #include "Control.h"
 #include "Signal.h"
 
