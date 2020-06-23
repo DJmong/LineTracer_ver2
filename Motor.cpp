@@ -1,14 +1,3 @@
-/*
- * 사용 MCU : Arduino Mega 2560
- * PIN : PWM A = 13, PWM B = 10
- *       A - 1 = 12, A - 2 = 11
- *       B - 1 = 9,  B - 2 = 8
- * Prescale : 1
- * 설명 : 모터 드라이버를 통해 DC 모터를 제어하는 모듈
- * 
- */
-
-
 #include "Motor.h"
 
 //매크로 정의

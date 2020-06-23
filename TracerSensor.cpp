@@ -1,12 +1,3 @@
-/*
- *  사용 MCU : Arduino Mega 2560
- *  PIN : Analog 0~7
- *  ADC Prescale : 16MHz / 32
- *  설명 : ADC 0 ~ 7을 이용해 TRCT 5000 센서 값을 읽어온다.
- *  
- */
-
-
 #include "TracerSensor.h"
 
 //핀 매크로
@@ -33,7 +24,7 @@ void TracerInit(){
   ADCSRA |= 1 << ADSC;
   ADCSRA |= 1<< ADIE;
   //ADC 프리스케일
-  ADCSRA |= (1<<ADPS2) |(1<<ADPS1) | (1<<ADPS0); // 1/32
+  ADCSRA |= (1<<ADPS2) |(0<<ADPS1) | (1<<ADPS0); 
 
 }
 
