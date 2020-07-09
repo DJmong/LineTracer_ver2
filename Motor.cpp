@@ -1,8 +1,5 @@
 /*
- * 사용 MCU : Arduino Mega 2560
- * PIN : PWM A = 13, PWM B = 10
- *       A - 1 = 12, A - 2 = 11
- *       B - 1 = 9,  B - 2 = 8
+ * 사용 MCU : Arduino NANO
  * Prescale : 1
  * 설명 : 모터 드라이버를 통해 DC 모터를 제어하는 모듈
  * 
@@ -19,35 +16,36 @@
 //모터 핀 매크로 정의
 #define L_PWM OCR0A
 #define R_PWM OCR2A
-#define MOTOR_A PORTB
-#define MOTOR_B PORTH
-#define MOTOR_A_INIT DDRB
-#define MOTOR_B_INIT DDRH
 
 //모터 회전 방향 매크로 정의
-#define L_BACK      (set_bit(MOTOR_A, 6));\
-                    (clear_bit(MOTOR_A, 5));
+#define L_FORW (set_bit(PORTB, 4));\
+               (clear_bit(PORTB, 5));
 
-#define L_FORWARD   (set_bit(MOTOR_A, 5));\
-                    (clear_bit(MOTOR_A, 6));
-                    
-#define R_BACK      (set_bit(MOTOR_B, 6));\
-                    (clear_bit(MOTOR_B, 5));
+#define L_BACK (set_bit(PORTB, 5));\
+               (clear_bit(PORTB, 4));
 
-#define R_FORWARD   (set_bit(MOTOR_B, 5));\
-                    (clear_bit(MOTOR_B, 6));
-            
+#define R_FORW (set_bit(PORTB, 0));\
+               (clear_bit(PORTB, 1));
 
-//진행 방향 매크로 정의
-#define STOP 
-#define GO L_FORWARD;\
-           R_FORWARD;
+#define R_BACK (set_bit(PORTB, 1));\
+               (clear_bit(PORTB, 0));
+
+static int SpdExc(int spd, char dir);
 
 //모터 초기설정
 void MotorInit() {
-  MOTOR_A_INIT |= 0xF0;
-  MOTOR_B_INIT |= 0x60;
+  //OCR
+  set_bit(DDRB, 3);
+  set_bit(DDRD, 6);
+  
+  //모터 핀
+  set_bit(DDRB, 0x33);
+  
 
+  //STBY
+  DDRB |= 0x04;
+  PORTB |= 0x04;
+  
   TCCR0A |= (1 << WGM01) | (1 << WGM00);
   TCCR0A |= (1 << COM0A1) | (0 << COM0A0);
   TCCR0B |= (0 << CS02) | (0 << CS01) | (1 << CS00);
@@ -56,31 +54,52 @@ void MotorInit() {
   TCCR2A |= (1 << COM2A1) | (0 << COM2A0);
   TCCR2B |= (0 << CS02) | (0 << CS01) | (1 << CS00);
 
-  L_FORWARD;
-  R_FORWARD;
+  L_FORW;
+  R_FORW;
 }
 
 //모터 입력
-void MotorIn(int L_speed, int R_speed) {
+void MotorIn(int L_spd, int R_spd) {
 
-  if(L_speed == 125) L_speed = 0;
-  else if(L_speed > 255)L_speed = 255;
-  else if(L_speed < 125){
-    if(L_speed < 0) L_speed = 0;
-    L_BACK;
-    L_speed = 255 - L_speed;
-  }
-  else L_FORWARD;
+  L_spd = SpdExc(L_spd, 'L');
+  R_spd = SpdExc(R_spd, 'R');
   
-  if(R_speed == 125) R_speed = 0;
-  else if(R_speed > 255) R_speed = 255;
-  else if(R_speed < 125){
-    if(R_speed < 0) R_speed = 0;
-    R_BACK;
-    R_speed = 255 - R_speed;
-  }
-  else R_FORWARD;
+  L_PWM = L_spd;
+  R_PWM = R_spd;
+}
 
-  L_PWM = L_speed;
-  R_PWM = R_speed;
+//예외처리 함수
+static int SpdExc(int spd, char dir){
+  const int min_spd = -30;
+
+  //음수 속도값 보정
+  if(spd < min_spd){
+    spd =  -spd;
+    if(dir == 'L' || dir == 'l'){
+      L_BACK;    
+    }
+    else if(dir == 'R' || dir == 'r'){
+      R_BACK;
+    }
+  }
+  else{
+    if(dir == 'L' || dir == 'l'){
+      L_FORW;
+    }
+    else if(dir == 'R' || dir == 'r'){
+      R_FORW;
+    }
+  }
+
+  //속도 최대 값 제한
+  if(spd > 255){
+    spd = 255;
+  }
+
+  //에러 방지
+  if(spd < 0){
+    spd = 0;
+  }
+
+  return spd;
 }

@@ -6,6 +6,7 @@
 #include <avr/interrupt.h>
 
 //함수 선언
-void timer_init();
-int time_get();
+void TimerInit();
+int TimerGet();
+void TimerClear();
 #endif

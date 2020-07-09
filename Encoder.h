@@ -7,4 +7,5 @@
 // 함수 정의
 void EncoderInit();
 float EncoderGetDist(char direc);
+void EncoderClear(char dir);
 #endif
