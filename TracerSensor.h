@@ -7,7 +7,7 @@
 
 //함수 선언
 void TracerInit();
-int TracerRead();
+void TracerRead(int *arr);
 
 
 #endif

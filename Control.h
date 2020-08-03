@@ -5,6 +5,8 @@
 #include "Motor.h"
 #include "timer.h"
 
+
+
 void ControlInit();
 float GetSpeed(int t, float dist);
 void SetSpeed (int L, int R);

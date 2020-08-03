@@ -42,7 +42,7 @@ void MotorInit() {
   set_bit(DDRB, 0x33);
   
 
-  //STBY
+  //STBY 핀 설정
   DDRB |= 0x04;
   PORTB |= 0x04;
   

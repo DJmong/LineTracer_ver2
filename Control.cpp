@@ -1,10 +1,23 @@
+/*
+ * 미완성
+ * 
+ * 
+ * 기능
+ *  Encoder 모듈과 Timer모듈을 이용해 시간, 거리값을 불러와
+ * 현재 속도를 계산할 수 있다.
+ *  모터 스피드와 PWM 비율을 계산해 MotorIn 함수를 호출할 수 있다.
+ * 
+ * 구현 못한거
+ *  PID 피드백
+ */
+
 #include "Control.h"
 
 #define Kp 1
 #define Ki 0
 #define Kd 1
 
-#define SPEED_CAL(x) x/2; //속도 : PWM 비율 연산 값
+#define SPEED_CAL(x) x/2 //속도 : PWM 비율 연산 값
 
 int spd_L, spd_R;
 
@@ -20,10 +33,10 @@ void SetSpeed (int L, int R){
   spd_R = SPEED_CAL(R);
 
   MotorIn(spd_L, spd_R);
-
 }
-
-
+void Turn(int ){
+  
+}
 int PID_L(int real_spd, int set_spd){
   int gain, err;
   static int sum = 0, pre = 0;

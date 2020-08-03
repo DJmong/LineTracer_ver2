@@ -1,3 +1,8 @@
+/*
+ * 타이머 인터럽트 1번 (16bit timer)을 이용해 1초를 만드는 함수
+ * 구글링하셈 기억 안남
+ */
+
 #include "timer.h"
 
 //인터럽트 전역 변수
@@ -12,11 +17,12 @@ void TimerInit(){
   OCR1A = 0x500;
 }
 
-
+// 시간 값을 읽음
 int TimerGet(){
   return time_s;
 }
 
+// 시간 값 초기화
 void TimerClear(){
   time_s = 0;
 }
@@ -27,6 +33,4 @@ ISR(TIMER1_OVF_vect){
     tmp = 0;
     time_s++;
   }
-
-  
 }
