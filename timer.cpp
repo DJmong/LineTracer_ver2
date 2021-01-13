@@ -3,6 +3,11 @@
  * 구글링하셈 기억 안남
  */
 
+//시스템
+#include <avr/io.h>
+#include <avr/interrupt.h>
+
+
 #include "timer.h"
 
 //인터럽트 전역 변수

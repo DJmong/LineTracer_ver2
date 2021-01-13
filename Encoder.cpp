@@ -9,6 +9,7 @@
  */
 
 //system
+#include <avr/io.h>
 #include <avr/interrupt.h>
 
 #include "Motor.h"

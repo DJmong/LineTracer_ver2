@@ -11,7 +11,11 @@
  *  PID 피드백
  */
 
+//Module Include 
 #include "Control.h"
+#include "Encoder.h"
+#include "Motor.h"
+#include "timer.h"
 
 #define Kp 1
 #define Ki 0

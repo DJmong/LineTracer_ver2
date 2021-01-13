@@ -4,6 +4,8 @@
  * 설명 : 모터 드라이버를 통해 DC 모터를 제어하는 모듈
  * 
  */
+// system
+#include <avr/io.h>
 
 
 #include "Motor.h"

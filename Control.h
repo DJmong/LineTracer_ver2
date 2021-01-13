@@ -1,12 +1,6 @@
 #ifndef __CONTROL_H__
 #define __CONTROL_H__
 
-#include "Encoder.h"
-#include "Motor.h"
-#include "timer.h"
-
-
-
 void ControlInit();
 float GetSpeed(int t, float dist);
 void SetSpeed (int L, int R);

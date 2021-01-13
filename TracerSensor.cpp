@@ -5,8 +5,11 @@
  *  설명 : ADC 0 ~ 7을 이용해 TRCT 5000 센서 값을 읽어온다.
  *  
  */
+//시스템
+#include <avr/io.h>
+#include <avr/interrupt.h>
 
-
+//Module Include
 #include "TracerSensor.h"
 #include "Signal.h"
 //핀 매크로
